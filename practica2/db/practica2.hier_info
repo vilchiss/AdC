@@ -1,0 +1,90 @@
+|practica2
+atras <= carta_asm_2:inst.atras
+reloj => divider:inst1.reloj
+RESET => carta_asm_2:inst.RESET
+S[1] => carta_asm_2:inst.S[0]
+S[0] => carta_asm_2:inst.S[1]
+adelante <= carta_asm_2:inst.adelante
+giro_der <= carta_asm_2:inst.giro_der
+giro_izq <= carta_asm_2:inst.giro_izq
+out_state[0] <= carta_asm_2:inst.out_epresente[0]
+out_state[1] <= carta_asm_2:inst.out_epresente[1]
+out_state[2] <= carta_asm_2:inst.out_epresente[2]
+out_state[3] <= carta_asm_2:inst.out_epresente[3]
+
+
+|practica2|carta_asm_2:inst
+RELOJ => out_epresente[0]~reg0.CLK
+RELOJ => out_epresente[1]~reg0.CLK
+RELOJ => out_epresente[2]~reg0.CLK
+RELOJ => out_epresente[3]~reg0.CLK
+RELOJ => adelante~reg0.CLK
+RELOJ => giro_der~reg0.CLK
+RELOJ => giro_izq~reg0.CLK
+RELOJ => atras~reg0.CLK
+RELOJ => esiguiente[0].CLK
+RELOJ => esiguiente[1].CLK
+RELOJ => esiguiente[2].CLK
+RELOJ => esiguiente[3].CLK
+RESET => esiguiente[0].ACLR
+RESET => esiguiente[1].ACLR
+RESET => esiguiente[2].ACLR
+RESET => esiguiente[3].ACLR
+RESET => out_epresente[0]~reg0.ENA
+RESET => atras~reg0.ENA
+RESET => giro_izq~reg0.ENA
+RESET => giro_der~reg0.ENA
+RESET => adelante~reg0.ENA
+RESET => out_epresente[3]~reg0.ENA
+RESET => out_epresente[2]~reg0.ENA
+RESET => out_epresente[1]~reg0.ENA
+S[0] => Equal0.IN7
+S[0] => Equal1.IN7
+S[0] => Equal2.IN7
+S[0] => Equal3.IN7
+S[1] => Equal0.IN6
+S[1] => Equal1.IN6
+S[1] => Equal2.IN6
+S[1] => Equal3.IN6
+atras <= atras~reg0.DB_MAX_OUTPUT_PORT_TYPE
+adelante <= adelante~reg0.DB_MAX_OUTPUT_PORT_TYPE
+giro_der <= giro_der~reg0.DB_MAX_OUTPUT_PORT_TYPE
+giro_izq <= giro_izq~reg0.DB_MAX_OUTPUT_PORT_TYPE
+out_epresente[0] <= out_epresente[0]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+out_epresente[1] <= out_epresente[1]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+out_epresente[2] <= out_epresente[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+out_epresente[3] <= out_epresente[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
+
+
+|practica2|divider:inst1
+reloj => cuenta[0].CLK
+reloj => cuenta[1].CLK
+reloj => cuenta[2].CLK
+reloj => cuenta[3].CLK
+reloj => cuenta[4].CLK
+reloj => cuenta[5].CLK
+reloj => cuenta[6].CLK
+reloj => cuenta[7].CLK
+reloj => cuenta[8].CLK
+reloj => cuenta[9].CLK
+reloj => cuenta[10].CLK
+reloj => cuenta[11].CLK
+reloj => cuenta[12].CLK
+reloj => cuenta[13].CLK
+reloj => cuenta[14].CLK
+reloj => cuenta[15].CLK
+reloj => cuenta[16].CLK
+reloj => cuenta[17].CLK
+reloj => cuenta[18].CLK
+reloj => cuenta[19].CLK
+reloj => cuenta[20].CLK
+reloj => cuenta[21].CLK
+reloj => cuenta[22].CLK
+reloj => cuenta[23].CLK
+reloj => cuenta[24].CLK
+reloj => cuenta[25].CLK
+reloj => cuenta[26].CLK
+reloj => cuenta[27].CLK
+div_clk <= cuenta[25].DB_MAX_OUTPUT_PORT_TYPE
+
+
