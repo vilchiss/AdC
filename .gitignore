@@ -1,6 +1,6 @@
-.bak
-.qws
-.rpt
+*.bak
+*.qws
+*.rpt
 */output_files/
 */incremental_db
 */simulation
