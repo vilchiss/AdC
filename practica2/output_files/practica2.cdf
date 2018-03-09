@@ -4,10 +4,10 @@ JedecChain;
 	DefaultMfr(6E);
 
 	P ActionCode(Cfg)
-		Device PartName(EPCS4) Path("C:/Users/luis_/Documents/Quartus/Arquitectura/practica2/output_files/") File("practica2.pof") MfrSpec(OpMask(7) Child_OpMask(1 7));
+		Device PartName(EP2C5T144) Path("C:/Users/luis_/Documents/Quartus/Arquitectura/AdC/practica2/output_files/") File("practica2.sof") MfrSpec(OpMask(1));
 
 ChainEnd;
 
 AlteraBegin;
-	ChainType(asc);
+	ChainType(JTAG);
 AlteraEnd;

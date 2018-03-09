@@ -21,9 +21,9 @@ applicable agreement for further details.
 (header "graphic" (version "1.4"))
 (pin
 	(input)
-	(rect 176 256 344 272)
+	(rect 120 176 288 192)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "reloj" (rect 5 0 26 12)(font "Arial" ))
+	(text "reloj" (rect 5 0 25 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -34,13 +34,13 @@ applicable agreement for further details.
 		(line (pt 109 12)(pt 113 8))
 	)
 	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
-	(annotation_block (location)(rect 128 272 176 288))
+	(annotation_block (location)(rect 72 192 120 208))
 )
 (pin
 	(input)
 	(rect 168 320 336 336)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "RESET" (rect 5 0 41 12)(font "Arial" ))
+	(text "RESET" (rect 5 0 40 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -57,7 +57,7 @@ applicable agreement for further details.
 	(input)
 	(rect 176 376 344 392)
 	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
-	(text "S[0..1]" (rect 5 0 39 12)(font "Arial" ))
+	(text "S[0..1]" (rect 5 0 38 12)(font "Arial" ))
 	(pt 168 8)
 	(drawing
 		(line (pt 84 12)(pt 109 12))
@@ -69,6 +69,22 @@ applicable agreement for further details.
 	)
 	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
 	(annotation_block (location)(rect 128 392 176 408))
+)
+(pin
+	(input)
+	(rect 80 64 248 80)
+	(text "INPUT" (rect 125 0 153 10)(font "Arial" (font_size 6)))
+	(text "boton" (rect 5 0 33 12)(font "Arial" ))
+	(pt 168 8)
+	(drawing
+		(line (pt 84 12)(pt 109 12))
+		(line (pt 84 4)(pt 109 4))
+		(line (pt 113 8)(pt 168 8))
+		(line (pt 84 12)(pt 84 4))
+		(line (pt 109 4)(pt 113 8))
+		(line (pt 109 12)(pt 113 8))
+	)
+	(text "VCC" (rect 128 7 148 17)(font "Arial" (font_size 6)))
 )
 (pin
 	(output)
@@ -220,7 +236,7 @@ applicable agreement for further details.
 	)
 )
 (symbol
-	(rect 416 232 560 312)
+	(rect 360 160 504 240)
 	(text "divider" (rect 5 0 38 12)(font "Arial" ))
 	(text "inst1" (rect 8 64 31 76)(font "Arial" ))
 	(port
@@ -241,17 +257,41 @@ applicable agreement for further details.
 		(rectangle (rect 16 16 128 64))
 	)
 )
-(connector
-	(pt 560 264)
-	(pt 696 264)
-)
-(connector
-	(pt 696 264)
-	(pt 696 272)
-)
-(connector
-	(pt 696 272)
-	(pt 728 272)
+(symbol
+	(rect 360 40 520 120)
+	(text "sensa_boton" (rect 5 0 67 12)(font "Arial" ))
+	(text "inst2" (rect 8 64 31 76)(font "Arial" ))
+	(port
+		(pt 0 32)
+		(input)
+		(text "boton" (rect 0 0 27 12)(font "Arial" ))
+		(text "boton" (rect 21 27 48 39)(font "Arial" ))
+		(line (pt 0 32)(pt 16 32))
+	)
+	(port
+		(pt 0 48)
+		(input)
+		(text "clk" (rect 0 0 14 12)(font "Arial" ))
+		(text "clk" (rect 21 43 35 55)(font "Arial" ))
+		(line (pt 0 48)(pt 16 48))
+	)
+	(port
+		(pt 160 32)
+		(output)
+		(text "reloj" (rect 0 0 20 12)(font "Arial" ))
+		(text "reloj" (rect 123 27 143 39)(font "Arial" ))
+		(line (pt 160 32)(pt 144 32))
+	)
+	(port
+		(pt 160 48)
+		(output)
+		(text "epresente" (rect 0 0 48 12)(font "Arial" ))
+		(text "epresente" (rect 99 43 147 55)(font "Arial" ))
+		(line (pt 160 48)(pt 144 48))
+	)
+	(drawing
+		(rectangle (rect 16 16 144 64))
+	)
 )
 (connector
 	(pt 336 328)
@@ -292,10 +332,6 @@ applicable agreement for further details.
 (connector
 	(pt 1072 400)
 	(pt 1072 320)
-)
-(connector
-	(pt 416 264)
-	(pt 344 264)
 )
 (connector
 	(pt 344 384)
@@ -359,4 +395,45 @@ applicable agreement for further details.
 	(pt 1224 464)
 	(bus)
 )
+(connector
+	(pt 352 192)
+	(pt 360 192)
+)
+(connector
+	(pt 352 192)
+	(pt 352 184)
+)
+(connector
+	(pt 672 272)
+	(pt 728 272)
+)
+(connector
+	(pt 312 184)
+	(pt 312 88)
+)
+(connector
+	(pt 312 88)
+	(pt 360 88)
+)
+(connector
+	(pt 672 72)
+	(pt 520 72)
+)
+(connector
+	(pt 672 272)
+	(pt 672 72)
+)
+(connector
+	(pt 248 72)
+	(pt 360 72)
+)
+(connector
+	(pt 288 184)
+	(pt 312 184)
+)
+(connector
+	(pt 312 184)
+	(pt 352 184)
+)
 (junction (pt 1224 200))
+(junction (pt 312 184))
