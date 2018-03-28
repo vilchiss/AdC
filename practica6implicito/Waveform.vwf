@@ -179,9 +179,9 @@ TRANSITION_LIST("clock")
 		REPEAT = 1;
 		NODE
 		{
-			REPEAT = 25;
-			LEVEL 0 FOR 20.0;
-			LEVEL 1 FOR 20.0;
+			REPEAT = 50;
+			LEVEL 0 FOR 10.0;
+			LEVEL 1 FOR 10.0;
 		}
 	}
 }
@@ -191,7 +191,11 @@ TRANSITION_LIST("entradas[1]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
+		LEVEL 0 FOR 90.0;
+		LEVEL 1 FOR 40.0;
+		LEVEL 0 FOR 160.0;
+		LEVEL 1 FOR 20.0;
+		LEVEL 0 FOR 690.0;
 	}
 }
 
@@ -200,9 +204,11 @@ TRANSITION_LIST("entradas[0]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 0 FOR 100.0;
+		LEVEL 0 FOR 10.0;
+		LEVEL 1 FOR 20.0;
+		LEVEL 0 FOR 60.0;
 		LEVEL 1 FOR 40.0;
-		LEVEL 0 FOR 860.0;
+		LEVEL 0 FOR 870.0;
 	}
 }
 
