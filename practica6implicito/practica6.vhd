@@ -28,19 +28,26 @@ library ieee;
 entity practica6 is
   port (
     clock     : in  std_logic;
+    boton     : in  std_logic;
     entradas  : in  unsigned(1 downto 0);
     salidas   : out unsigned(3 downto 0)
   );
 end entity;
 
 architecture arch of practica6 is
-  signal carga_s, vf_s, ent_s: std_logic;
+  signal carga_s, vf_s, ent_s, clk_s: std_logic;
   signal prueba_s: unsigned(1 downto 0);
   signal liga_s, salv_s, salf_s, dir_s: unsigned(3 downto 0);
   signal sal_mem_s: unsigned(14 downto 0);
 begin
+  sensa_e: entity work.sensa_boton port map(
+    boton => boton,
+    clk   => clock,
+    reloj => clk_s
+  );
+
   cont_e: entity work.contador port map(
-    clock => clock,
+    clock => clk_s,
     data  => liga_s,
     load  => carga_s,
     count => dir_s
@@ -52,14 +59,14 @@ begin
     data_out  => sal_mem_s
   );
 
-  reg_outv_p: process(clock) begin
-    if rising_edge(clock) then
+  reg_outv_p: process(clk_s) begin
+    if rising_edge(clk_s) then
 			salv_s <= sal_mem_s(7 downto 4);
 		end if;
 	end process;
 
-  reg_outf_p: process(clock) begin
-    if rising_edge(clock) then
+  reg_outf_p: process(clk_s) begin
+    if rising_edge(clk_s) then
 			salf_s <= sal_mem_s(3 downto 0);
 		end if;
 	end process;
