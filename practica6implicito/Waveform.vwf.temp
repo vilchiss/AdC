@@ -201,7 +201,9 @@ TRANSITION_LIST("entradas[0]")
 	NODE
 	{
 		REPEAT = 1;
-		LEVEL 0 FOR 1000.0;
+		LEVEL 0 FOR 100.0;
+		LEVEL 1 FOR 40.0;
+		LEVEL 0 FOR 860.0;
 	}
 }
 
