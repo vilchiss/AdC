@@ -30,7 +30,6 @@ timing
 *.html
 *.jdi
 *.jpg
-*.mif
 *.pin
 *.pof
 *.ptf.*
@@ -48,5 +47,3 @@ timing
 *example*
 *sopc_*
 PLLJ_PLLSPE_INFO.txt # The generated PLL specification file
-
-
