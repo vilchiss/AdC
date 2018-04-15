@@ -19,6 +19,6 @@ salida <= s when habilitador = '1' else "ZZZZ";
 
 s <= "0011" when  valor = "00" else
 	"1000" when  valor = "01" else
-	"1000" when  valor = "10" else
+	"1101" when  valor = "10" else
 	"1111";
 end architecture;

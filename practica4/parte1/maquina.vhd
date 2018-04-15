@@ -8,9 +8,7 @@ port(
 	reloj: in std_logic;
 	entradas: in unsigned(1 downto 0); -- LSB -> X else Y
 	sel_trans:in unsigned(1 downto 0); -- Selecciona el salto en transformación
-	salidas: out unsigned(3 downto 0);
-	mem_out: out unsigned(12 downto 0);
-	y_debug: out unsigned(3 downto 0)
+	salidas: out unsigned(3 downto 0)
 );
 end entity;
 
@@ -21,13 +19,46 @@ architecture Behavioral of maquina is
 	signal mem_salida: unsigned(12 downto 0);
 begin
 
--- Asginación de las señales de la salida de la memoria
--- si pl esta desactivado se mandan a alta impedancia
-liga <= mem_salida(12 downto 9) when pl = '0' else "ZZZZ" ;
-instruccion <= mem_salida(8 downto 7);
-prueba <= mem_salida(6 downto 5);
-vf <= mem_salida(4) when pl = '0';
-salidas <= mem_salida(3 downto 0);
+
+reg_liga: process(reloj, pl)
+begin
+	if rising_edge(reloj) then
+		if pl = '1' then
+			liga <= mem_salida(12 downto 9);
+		else
+			liga <= "ZZZZ";
+		end if;
+	end if;
+end process;
+
+reg_instruccion: process(reloj)
+begin
+	if rising_edge(reloj) then
+		instruccion <= mem_salida(8 downto 7);
+	end if;
+end process;
+
+reg_prueba: process(reloj)
+begin
+	if rising_edge(reloj) then
+		prueba <= mem_salida(6 downto 5);
+	end if;
+end process;
+
+reg_vf: process(reloj)
+begin
+	if rising_edge(reloj) then
+		vf <= mem_salida(4);
+	end if;
+end process;
+
+reg_salidas: process(reloj)
+begin
+	if rising_edge(reloj) then
+		salidas <= mem_salida(3 downto 0);
+	end if;
+end process;
+
 
 memoria: entity work.rom
 port map(
@@ -36,8 +67,6 @@ port map(
 	data_out => mem_salida
 );
 
-mem_out <= mem_salida;
-y_debug <= y;
 registro_inter: entity work.interrupciones
 port map(
 	habilitador => vect,
