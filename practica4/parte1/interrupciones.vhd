@@ -15,11 +15,11 @@ architecture Behavioral of interrupciones is
 	signal s: unsigned(3 downto 0);
 begin
 
-salida <= s when habilitador = '1' else "ZZZZ";
+salida <= s when habilitador = '0' else "ZZZZ";
 
 s <= "0101" when  (estado = "0100" and int = '0') else
      "0110" when  (estado = "0100" and int = '1') else
 	 "1010" when  (estado = "1001" and int = '0') else
 	 "1011" when  (estado = "1001" and int = '1') else
-	 "1111";
+	 "0000";
 end architecture;

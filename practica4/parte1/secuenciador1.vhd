@@ -38,7 +38,7 @@ salida <= registro_salida when selector = '0' else d;
 y <= salida;
 
 -- Incrementador
-incremento <= salida + "0001";
+incremento <= salida + 1;
 
 -- Lógica interna
 logica: entity work.logica_interna

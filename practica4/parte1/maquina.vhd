@@ -6,9 +6,10 @@ use ieee.numeric_std.all;
 entity maquina is 
 port(
 	reloj: in std_logic;
-	entradas: in unsigned(1 downto 0); -- LSB -> X else Y
+	entradas: in unsigned(2 downto 0); -- LSB -> X else Y
 	sel_trans:in unsigned(1 downto 0); -- Selecciona el salto en transformación
-	salidas: out unsigned(3 downto 0)
+	salidas: out unsigned(3 downto 0);
+	estado: out unsigned(3 downto 0)
 );
 end entity;
 
@@ -19,11 +20,12 @@ architecture Behavioral of maquina is
 	signal mem_salida: unsigned(12 downto 0);
 begin
 
+estado <= y;
 
 reg_liga: process(reloj, pl)
 begin
 	if rising_edge(reloj) then
-		if pl = '1' then
+		if pl = '0' then
 			liga <= mem_salida(12 downto 9);
 		else
 			liga <= "ZZZZ";
@@ -70,7 +72,7 @@ port map(
 registro_inter: entity work.interrupciones
 port map(
 	habilitador => vect,
-	int => cc,
+	int => entrada,
 	estado => liga,
 	salida => d
 );
@@ -96,9 +98,10 @@ port map(
 );
 
 d <= liga;
-cc <= entrada xor vf;
+cc <= entrada xnor vf;
 entrada <= entradas(0) when prueba = "01" else
 	entradas(1) when prueba = "10" else
+	entradas(2) when prueba = "11" else
 	'0';
 	
 end Behavioral;

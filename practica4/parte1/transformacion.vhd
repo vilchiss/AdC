@@ -15,7 +15,7 @@ architecture Behavioral of transformacion is
 	signal s: unsigned(3 downto 0);
 begin
 
-salida <= s when habilitador = '1' else "ZZZZ";
+salida <= s when habilitador = '0' else "ZZZZ";
 
 s <= "0011" when  valor = "00" else
 	"1000" when  valor = "01" else
