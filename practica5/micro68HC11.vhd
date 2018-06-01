@@ -1,27 +1,26 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_ARITH.ALL;
-use IEEE.STD_LOGIC_UNSIGNED.ALL;
+    use ieee.numeric_std.all;
 
 entity micro68HC11 is
-	Port( clk: in STD_LOGIC;
-			reset: in STD_LOGIC;
-			nIRQ: in STD_LOGIC;
-			nXIRQ: in STD_LOGIC;
-			Data_in: in unsigned(7 downto 0);
-			Data_out: out unsigned(7 downto 0); -- Bus de datos de 8 bits
-			Dir: out unsigned(15 downto 0); -- Bus de direcciones de 16 bits
-			nRW: out STD_LOGIC:= '1'; -- Señal para escribir en memoria
+	Port(   clk				: in  STD_LOGIC;
+			reset			: in  STD_LOGIC;
+			nIRQ			: in  STD_LOGIC;
+			nXIRQ			: in  STD_LOGIC;
+			Data_in			: in  unsigned(7 downto 0);
+			Data_out		: out unsigned(7 downto 0); -- Bus de datos de 8 bits
+			Dir				: out unsigned(15 downto 0); -- Bus de direcciones de 16 bits
+			nRW				: out STD_LOGIC:= '1'; -- Señal para escribir en memoria
 			-- Debug
-			PC_low_out: out unsigned(7 downto 0);
-			e_presente_out: out unsigned(7 downto 0);
-			A_out: out unsigned (7 downto 0);
-			B_out: out unsigned (7 downto 0);
-			X_low_out: out unsigned(7 downto 0);
-			X_high_out: out unsigned(7 downto 0);
-			Y_low_out: out unsigned(7 downto 0);
-			D_out : out unsigned (15 downto 0);
-			flags: out STD_LOGIC_VECTOR(7 downto 0)
+			PC_low_out		: out unsigned(7 downto 0);
+			e_presente_out	: out unsigned(7 downto 0);
+			A_out			: out unsigned(7 downto 0);
+			B_out			: out unsigned(7 downto 0);
+			X_low_out		: out unsigned(7 downto 0);
+			X_high_out		: out unsigned(7 downto 0);
+			Y_low_out		: out unsigned(7 downto 0);
+			D_out 			: out unsigned (15 downto 0);
+			flags			: out unsigned(7 downto 0)
 			-- S X H I N Z V C
 			);
 end micro68HC11;
@@ -32,7 +31,7 @@ architecture Behavioral of micro68HC11 is
 	signal e_presente: unsigned(12 downto 0) := '0' & X"000";
 	signal e_siguiente: unsigned(12 downto 0);
 	signal PC: unsigned (15 downto 0):= X"0014";
-	signal estados: STD_LOGIC_VECTOR (7 downto 0):= X"00"; -- S X H I N Z V C
+	signal estados: unsigned (7 downto 0):= X"00"; -- S X H I N Z V C
 	signal A: unsigned (7 downto 0); -- Acumulador A
 	signal B: unsigned (7 downto 0); -- Acumuladro B
 	signal Q: unsigned (7 downto 0);
@@ -72,16 +71,16 @@ architecture Behavioral of micro68HC11 is
 
 	begin
 
-		process(clk, reset, e_presente, e_siguiente)
+		process(clk, reset,e_presente,e_siguiente)
 			begin
 				if (reset = '0') then
 					e_siguiente <= '0' & X"000";
-					PC <= X"0014";
-					DINT <= '0';
-					HINT <= '0';
-					SET_IRQ <= '0';
-					SET_XIRQ <= '0';
-					indY <= '0';
+					PC			<= X"0014";
+					DINT		<= '0';
+					HINT		<= '0';
+					SET_IRQ		<= '0';
+					SET_XIRQ	<= '0';
+					indY		<= '0';
 				else
 					if (rising_edge(clk)) then
 						case e_presente is
@@ -201,14 +200,49 @@ architecture Behavioral of micro68HC11 is
 									e_siguiente <= e1;
 								end if;
 
-
 							----------------------------- LDAB DIRECCION_16_bits (Acceso Extendido) -----------------------------
 							-- Carga en el acumulador B el valor que se encuentra en la direccion DIRECCION_16_bits
-
-
-
-
-
+							when '0' & X"F60" => -- Codigo F6
+								Dir <= PC;
+								e_siguiente <= e_presente + 1;
+							when '0' & X"F61" =>
+								PC <= PC + 1;
+								PCH <= Data_in; -- guarda parte alta de la direccion
+								e_siguiente <= e_presente + 1;
+							when '0' & X"F62" => -- Codigo F6
+								Dir <= PC;
+								e_siguiente <= e_presente + 1;
+							when '0' & X"F63" =>
+								PC <= PC + 1;
+								PCL <= Data_in; -- guarda parte baja de la direccion
+								e_siguiente <= e_presente + 1;
+							-- Solicita contenido de PCH & PCL
+							when '0' & X"F64" =>
+								Dir <= PCH & PCL;
+								e_siguiente <= e_presente + 1;
+							when '0' & X"F65" =>
+								-- Guarda el contenido en el acumulador B
+								B <= Data_in;
+								-- Actualiza Bandera N
+								estados(3) <= Data_in(7);
+								-- Actualiza Bandera Z
+								if(Data_in = ZERO) then
+									estados(2) <= '1';
+								else
+									estados(2) <= '0';
+								end if;
+								-- Actualiza Bandera V = 0
+								estados(1) <= '0';
+								if(INT = '1') then	-- Interrupcion
+									if (XIRQ = '1') then -- Si hay interrupcion externa
+										e_siguiente <= microX;
+									elsif (IRQ = '1') then -- Si hay interrupcion interna
+										e_siguiente <= microI;
+									end if;
+								else
+									Dir <= PC;
+									e_siguiente <= e1;
+								end if;
 
 							----------------------------- BNE Desplazamiento (Acceso Relativo) -----------------------------
 							-- Salta a la direccion PC + Desplazamiento si la bandera Z = 0 (la operacion anterior fue distinta de cero)
@@ -362,10 +396,42 @@ architecture Behavioral of micro68HC11 is
 
 							----------------------------- STAB IND,X (Acceso Indexado) -----------------------------
 							-- Carga en memoria el valor del acumulador B en la direccion almacenada en el registro indice X + IND
+							when '0' & X"E70" => -- Codigo E7
+								 Dir <= PC;
+								 e_siguiente <= e_presente + 1;
+							when '0' & X"E71" =>
+								 PC <= PC + 1;
+								 e_siguiente <= e_presente + 1;
+							when '0' & X"E72" =>
+								 Dir <= (XH & XL) + (ZERO & data_in);
+								 Data_out <= B;
+								 e_siguiente <= e_presente + 1;
+							when '0' & X"E73" =>
+								 nRw <= '0'; -- Señal para escribir en memoria
+								 e_siguiente <= e_presente + 1;
+							when '0' & X"E74" =>
+								 nRw <= '1';
+								 -- Actualiza Bandera N
+								 estados(3) <= B(7);
+								 -- Actualiza Bandera Z
+								 if(B = ZERO) then
+									  estados(2) <= '1';
+								 else
+									  estados(2) <= '0';
+								 end if;
+								 -- Actualiza Bandera V=0
+								 estados(1) <= '0';
 
-
-
-
+								 if(INT = '1') then    -- Interrupcion
+									  if (XIRQ = '1') then -- Si hay interrupcion externa
+											e_siguiente <= microX;
+									  elsif (IRQ = '1') then -- Si hay interrupcion interna
+											e_siguiente <= microI;
+									  end if;
+								 else
+									  Dir <= PC;
+									  e_siguiente <= e1;
+								 end if;
 
 							----------------------------- BRA Desplazamiento (Acceso Relativo) -----------------------------
 							-- Salto incondicional a PC + Desplazamiento
@@ -396,9 +462,33 @@ architecture Behavioral of micro68HC11 is
 
 							----------------------------- MUL (Acceso Inherente) -----------------------------
 							-- ACCD <= ACCA * ACCB
-
-
-
+							when '0' & X"3D0" => -- Codigo 3D
+								 Yupa <= A(3 downto 0) * B(3 downto 0);
+								 e_siguiente <= e_presente + 1;
+							when '0' & X"3D1" =>
+								 AuxL <= Yupa;
+									  estados(0) <= Yupa(7); -- Actualiza banderas S X H I N Z V C
+								 e_siguiente <= e_presente + 1;
+							when '0' & X"3D2" =>
+								 Yupa <= A(7 downto 4) * B(7 downto 4);
+								 e_siguiente <= e_presente + 1;
+							when '0' & X"3D3" =>
+								 A <= Yupa;
+								 e_siguiente <= e_presente + 1;
+							when '0' & X"3D4" =>
+								 B <= AuxL;
+								 e_siguiente <= e_presente + 1;
+							when '0' & X"3D5" =>
+								 if(INT = '1') then    -- Interrupcion
+									  if (XIRQ = '1') then -- Si hay interrupcion externa
+											e_siguiente <= microX;
+									  elsif (IRQ = '1') then -- Si hay interrupcion interna
+											e_siguiente <= microI;
+									  end if;
+								 else
+									  Dir <= PC;
+									  e_siguiente <= e1;
+								 end if;
 
 							----------------------------- RTI (Acceso Inherente) -----------------------------
 							-- Regresa de interrupcion
@@ -807,4 +897,4 @@ architecture Behavioral of micro68HC11 is
 		end process;
 
 
-end Behavioral;
+end behavioral;
