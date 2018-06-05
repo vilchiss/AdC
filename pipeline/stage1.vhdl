@@ -24,7 +24,7 @@ architecture arch of stage1 is
    process(clk, reset)
     begin
       if reset = '1' then
-        out_pc <= "0000000000000000";
+        out_pc <= (others => '0');
       else
         if rising_edge(clk) then
           out_pc <= out_mux;
@@ -34,7 +34,14 @@ architecture arch of stage1 is
 
    -- Memoria de instrucciones
    -- TODO: Añadir memoria e instanciar
-   
+   prog_mem: entity work.ram port map(
+        clock    => clk,
+        we       => '0', -- no escribimos en esta memoria
+        addr     => pc,
+        data_in  => (others => '0'); -- no escribimos en esta memoria
+        data_out => instr
+   );
+
    -- Incrementador
     out_incr <= out_pc + 1;
 
