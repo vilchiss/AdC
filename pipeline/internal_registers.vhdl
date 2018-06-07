@@ -6,14 +6,14 @@ entity internal_registers is
     port(
         clk, reset    : in std_logic;
         dato_w, d1, d2: in unsigned(15 downto 0);
-        sel_reg_r     : in std_logic;
-        sel_reg_w     : in std_logic;
+        sel_reg_r     : in unsigned(3 downto 0);
+        sel_reg_w     : in unsigned(3 downto 0)
     );
 end internal_registers;
 
 architecture arch of internal_registers is
     signal enaa, enab, enax, enay, enasp, ena_aux : std_logic;
-    signal acca, accb, ix, iy, sp, aux : unsigned (16 downto 0);  
+    signal acca, accb, ix, iy, sp, aux : unsigned (15 downto 0);  
 begin
     register: process (clk, reset)
     begin
