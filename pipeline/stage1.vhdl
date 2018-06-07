@@ -18,7 +18,7 @@ architecture arch of stage1 is
 
  begin
    -- Mux de branch
-    out_mux <= out_incr when branch = '0' else dato_w;
+   out_mux <= out_incr when branch = '0' else dato_w;
 
    -- Contador de programa
    process(clk, reset)

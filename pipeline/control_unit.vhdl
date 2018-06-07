@@ -4,7 +4,7 @@ library ieee;
 
 entity control_unit is
     port(
-        inst:   in  unsigned(15 downto 0);
+        instr:   in  unsigned(15 downto 0);
         SelS1, SR, Cin, SelS2, SelDato, SelDir, SelResult, SelC,
         Cadj, SelBranch, VF, MemW:  out std_logic;
         SelReg, SelOp, SelFlags:    out unsigned(3 downto 0);
@@ -17,7 +17,7 @@ architecture arch of control_unit is
 begin
     process (all)
     begin
-        case inst is
+        case instr is
             when x"001B" =>
                 SelRegR     <=  x"1";
                 SelS1       <=   '0';

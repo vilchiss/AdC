@@ -5,9 +5,9 @@ library ieee;
 entity internal_registers is
     port(
         clk, reset    : in std_logic;
-        dato_w, d1, d2: in unsigned(15 downto 0);
-        sel_reg_r     : in unsigned(3 downto 0);
-        sel_reg_w     : in unsigned(3 downto 0)
+        DatoW, D1, D2 : in unsigned(15 downto 0);
+        SelRegR       : in unsigned(3 downto 0);
+        SelRegW       : in unsigned(3 downto 0)
     );
 end internal_registers;
 
@@ -26,29 +26,29 @@ begin
             aux  <= (others => '0');
         elsif rising_edge (clk) then
             if enaa = 1 then
-                acca <= dato_w;
+                acca <= DatoW;
             end if;  
             if enab = 1 then
-                accb <= dato_w;
+                accb <= DatoW;
             end if;  
             if enax = 1 then
-                ix <= dato_w;
+                ix <= DatoW;
             end if;  
             if enay = 1 then
-                iy <= dato_w;
+                iy <= DatoW;
             end if;  
             if enasp = 1 then
-                sp <= dato_w;
+                sp <= DatoW;
             end if;  
             if ena_aux = 1 then
-                aux <= dato_w;
+                aux <= DatoW;
             end if;  
         end if;
     end process;
 
-    process (sel_reg_w)
+    process (SelRegW)
     begin
-        case sel_reg_w is
+        case SelRegW is
             when x"1" =>
                 enaa    <= '1';
                 enab    <= '0';
@@ -108,60 +108,60 @@ begin
         end case;
     end process; 
 
-    process (sel_reg_r)
+    process (SelRegR)
     begin
-        case sel_reg_r is
+        case SelRegR is
             when x"0" =>
-                d1 <= (others => '0');
-                d2 <= (others => '0');
+                D1 <= (others => '0');
+                D2 <= (others => '0');
             when x"1" =>
-                d1 <= acca;
-                d2 <= accb;
+                D1 <= acca;
+                D2 <= accb;
             when x"2" =>
-                d1 <= accb;
-                d2 <= (others => '0');
+                D1 <= accb;
+                D2 <= (others => '0');
             when x"3" =>
-                d1 <= accb;
-                d2 <= ix;
+                D1 <= accb;
+                D2 <= ix;
             when x"4" =>
-                d1 <= acca;
-                d2 <= (others => '0');
+                D1 <= acca;
+                D2 <= (others => '0');
             when x"5" =>
-                d1 <= accb;
-                d2 <= (others => '0');
+                D1 <= accb;
+                D2 <= (others => '0');
             when x"6" =>
-                d1 <= acca;
-                d2 <= ix;
+                D1 <= acca;
+                D2 <= ix;
             when x"7" =>
-                d1 <= acca;
-                d2 <= iy;
+                D1 <= acca;
+                D2 <= iy;
             when x"8" =>
-                d1 <= aux;
-                d2 <= (others => '0');
+                D1 <= aux;
+                D2 <= (others => '0');
             when x"9" =>
-                d1 <= (others => '0');
-                d2 <= ix;
+                D1 <= (others => '0');
+                D2 <= ix;
             when x"A" =>
-                d1 <= (others => '0');
-                d2 <= iy;
+                D1 <= (others => '0');
+                D2 <= iy;
             when x"B" =>
-                d1 <= (others => '0');
-                d2 <= sp;
+                D1 <= (others => '0');
+                D2 <= sp;
             when x"C" =>
-                d1 <= acca;
-                d2 <= sp;
+                D1 <= acca;
+                D2 <= sp;
             when x"D" =>
-                d1 <= accb;
-                d2 <= sp;
+                D1 <= accb;
+                D2 <= sp;
             when x"E" =>
-                d1 <= ix;
-                d2 <= sp;
+                D1 <= ix;
+                D2 <= sp;
             when x"F" =>
-                d1 <= iy;
-                d2 <= sp;
+                D1 <= iy;
+                D2 <= sp;
             when others =>
-                d1 <= (others => '0');
-                d2 <= (others => '0');
+                D1 <= (others => '0');
+                D2 <= (others => '0');
 
         end case;
     end process;
