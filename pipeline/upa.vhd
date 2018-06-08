@@ -9,7 +9,7 @@ use ieee.std_logic_misc.all;
 entity upa is
  port(
 	Acarreo	: in std_logic;
-	SelOP	: in unsigned(3 downto 0);
+	SelOp	: in unsigned(3 downto 0);
 	OP1, OP2 : in signed(15 downto 0);
 	ResultUPA: out signed(15 downto 0);
 	N, Z, V, C, H : out std_logic
@@ -64,8 +64,18 @@ begin
 	-- Banderas
 	N <= resultado(15);
 	Z <= nor_reduce(r(15 downto 0));
-	V <= not(r(15)) and and_reduce(r(14 downto 0));
 	C <= resultado(16);
 	H <= resultado(8);
+	
+	process(OP1, OP2, resultado)
+	begin
+		if OP1(15) = '1' and OP2(15) = '1' and resultado(15) = '0' then
+			V <= '1';
+		elsif OP1(15) = '0' and OP2(15) = '0' and resultado(15) = '1'then
+			V <= '1';
+		else
+			V <= '0';
+		end if;
+	end process;
 	
 end architecture;
