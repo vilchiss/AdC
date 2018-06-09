@@ -4,10 +4,11 @@ library ieee;
 
 entity internal_registers is
     port(
-        clk, reset    : in std_logic;
-        DatoW, D1, D2 : in unsigned(15 downto 0);
-        SelRegR       : in unsigned(3 downto 0);
-        SelRegW       : in unsigned(3 downto 0)
+        clk, reset    : in  std_logic;
+        DatoW         : in  unsigned(15 downto 0);
+        D1, D2        : out unsigned(15 downto 0);
+        SelRegR       : in  unsigned(3 downto 0);
+        SelRegW       : in  unsigned(3 downto 0)
     );
 end internal_registers;
 
@@ -15,9 +16,9 @@ architecture arch of internal_registers is
     signal enaa, enab, enax, enay, enasp, ena_aux : std_logic;
     signal acca, accb, ix, iy, sp, aux : unsigned (15 downto 0);  
 begin
-    register: process (clk, reset)
+    reg: process (clk, reset)
     begin
-        if reset = 1 then
+        if reset = '1' then
             acca <= (others => '0');
             accb <= (others => '0');
             ix   <= (others => '0');
@@ -25,22 +26,22 @@ begin
             sp   <= (others => '0');
             aux  <= (others => '0');
         elsif rising_edge (clk) then
-            if enaa = 1 then
+            if enaa = '1' then
                 acca <= DatoW;
             end if;  
-            if enab = 1 then
+            if enab = '1' then
                 accb <= DatoW;
             end if;  
-            if enax = 1 then
+            if enax = '1' then
                 ix <= DatoW;
             end if;  
-            if enay = 1 then
+            if enay = '1' then
                 iy <= DatoW;
             end if;  
-            if enasp = 1 then
+            if enasp = '1' then
                 sp <= DatoW;
             end if;  
-            if ena_aux = 1 then
+            if ena_aux = '1' then
                 aux <= DatoW;
             end if;  
         end if;

@@ -1,50 +1,49 @@
 library ieee;
-  use ieee.std_logic_1164.all;
-  use ieee.numeric_std.all;
+    use ieee.std_logic_1164.all;
+    use ieee.numeric_std.all;
 
 entity stage1 is
-  port(
-      clk, branch, reset : in std_logic;
-      dato_w : in unsigned(15 downto 0);
-      pc : out unsigned(15 downto 0);
-      instr : out unsigned(31 downto 0)
-  );
+    port(
+        clk, Branch, reset: in std_logic;
+        DatoW: in unsigned(15 downto 0);
+        PC: out unsigned(15 downto 0);
+        instr: out unsigned(31 downto 0)
+    );
 end stage1;
 
 architecture arch of stage1 is
- signal out_mux : unsigned(15 downto 0);
- signal out_pc : unsigned(15 downto 0);
- signal out_incr : unsigned(15 downto 0);
+    signal out_mux : unsigned(15 downto 0);
+    signal out_pc : unsigned(15 downto 0);
+    signal out_incr : unsigned(15 downto 0);
 
  begin
-   -- Mux de branch
-   out_mux <= out_incr when branch = '0' else dato_w;
+    -- Mux de branch
+    out_mux <= out_incr when Branch = '0' else DatoW;
 
-   -- Contador de programa
-   process(clk, reset)
-    begin
-      if reset = '1' then
-        out_pc <= (others => '0');
-      else
-        if rising_edge(clk) then
-          out_pc <= out_mux;
+    -- Contador de programa
+    process(clk, reset) begin
+        if reset = '1' then
+            out_pc <= (others => '0');
+        else
+            if rising_edge(clk) then
+                out_pc <= out_mux;
+            end if;
         end if;
-      end if;
-   end process;
+    end process;
 
-   -- Memoria de instrucciones
-   -- TODO: Añadir memoria e instanciar
-   prog_mem: entity work.ram port map(
+    -- Memoria de instrucciones
+    -- TODO: Añadir memoria e instanciar
+    prog_mem: entity work.ram port map(
         clock    => clk,
         we       => '0', -- no escribimos en esta memoria
-        addr     => pc,
-        data_in  => (others => '0'); -- no escribimos en esta memoria
+        addr     => out_pc,
+        data_in  => (others => '0'), -- no escribimos en esta memoria
         data_out => instr
-   );
+    );
 
-   -- Incrementador
+    -- Incrementador
     out_incr <= out_pc + 1;
 
-    pc <= out_incr;
+    PC <= out_incr;
 
 end architecture;
