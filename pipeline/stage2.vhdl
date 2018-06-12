@@ -18,27 +18,27 @@ architecture arch of stage2 is
     signal sel_s1_mux: unsigned(15 downto 0);
     signal d1, d2r, d2, d3_s, d4, d5, reg_int, ext_signo: unsigned(15 downto 0);
     signal ind_inc: unsigned(15 downto 0);
-    signal control_bus: unsigned(31 downto 0);
+    signal control_bus: unsigned(33 downto 0);
 begin
 
     ------ Entidades ------
     -- Unidad de Control --
     controlu: entity work.control_unit port map (
         instr       => instr(31 downto 16),
-        SelRegR     => control_bus(31 downto 28),
-        SelS1       => control_bus(27),
-        SR          => control_bus(26),
-        Cin         => control_bus(25),
-        SelS2       => control_bus(24),
-        SelScrs     => control_bus(23 downto 21),
-        SelDato     => control_bus(19),
-        SelDir      => control_bus(18 downto 17),
-        SelOp       => control_bus(16 downto 13),
-        SelResult   => control_bus(12),
-        SelC        => control_bus(11),
-        Cadj        => control_bus(10),
-        SelFlags    => control_bus(9 downto 6),
-        SelBranch   => control_bus(5),
+        SelRegR     => control_bus(33 downto 30),
+        SelS1       => control_bus(29),
+        SR          => control_bus(28),
+        Cin         => control_bus(27),
+        SelS2       => control_bus(26),
+        SelScrs     => control_bus(25 downto 23),
+        SelDato     => control_bus(22),
+        SelDir      => control_bus(21 downto 20),
+        SelOp       => control_bus(19 downto 16),
+        SelResult   => control_bus(15 downto 14),
+        SelC        => control_bus(13),
+        Cadj        => control_bus(12),
+        SelFlags    => control_bus(11 downto 8),
+        SelBranch   => control_bus(7 downto 5),
         VF          => control_bus(4),
         SelRegW     => control_bus(3 downto 1),
         MemW        => control_bus(0)
@@ -52,14 +52,14 @@ begin
         D1      => d1,
         D2      => d2r,
         DatoW   => DatoW,
-        SelRegR => control_bus(31 downto 28),
+        SelRegR => control_bus(33 downto 30),
         SelRegW => SelRegW
     );
 
     -- Sumador --
     sumres: entity work.sumador port map(
-        cin => control_bus(25),
-        sr  => control_bus(26),
+        cin => control_bus(27),
+        sr  => control_bus(28),
         a   => d2,
         b   => sel_s1_mux,
         sum => ind_inc
@@ -75,10 +75,10 @@ begin
     sel_dir <= SelDir1_ext & control_bus(17);
 
     -- Mux SelS1
-    sel_s1_mux <= X"0000" when control_bus(27) = '0' else instr(15 downto 0);
+    sel_s1_mux <= X"0000" when control_bus(29) = '0' else instr(15 downto 0);
 
     -- Mux SelS2
-    d2 <= d2r when control_bus(25) = '0' else PC;
+    d2 <= d2r when control_bus(27) = '0' else PC;
 
     -- Mux SelDir
     d3_s <= ind_inc when sel_dir = "00" else
@@ -86,24 +86,24 @@ begin
             DirW when sel_dir = "10"; -- no hay caso 3 D; sintetiza a latch
 
     -- Mux SelDato
-    d5 <= ext_signo when control_bus(20) = '0' else instr(15 downto 0);
+    d5 <= ext_signo when control_bus(22) = '0' else instr(15 downto 0);
 
     --Mux SelSrcs (OP1)
-    OP1 <=  d1 when control_bus(23 downto 21) = "001" else
-            d1 when control_bus(23 downto 21) = "010" else
-            d1 when control_bus(23 downto 21) = "011" else
-            d4 when control_bus(23 downto 21) = "100" else
-            d2 when control_bus(23 downto 21) = "101" else
-            d2 when control_bus(23 downto 21) = "101" else
+    OP1 <=  d1 when control_bus(25 downto 23) = "001" else
+            d1 when control_bus(25 downto 23) = "010" else
+            d1 when control_bus(25 downto 23) = "011" else
+            d4 when control_bus(25 downto 23) = "100" else
+            d2 when control_bus(25 downto 23) = "101" else
+            d2 when control_bus(25 downto 23) = "101" else
             x"0000";
 
     -- Mux SelSrcs (OP2)
-    OP2 <=  d2 when control_bus(23 downto 21) = "001" else
-            d4 when control_bus(23 downto 21) = "010" else
-            d5 when control_bus(23 downto 21) = "011" else
-          d3_s when control_bus(23 downto 21) = "100" else
-            d5 when control_bus(23 downto 21) = "101" else
-            d4 when control_bus(23 downto 21) = "110" else
+    OP2 <=  d2 when control_bus(25 downto 23) = "001" else
+            d4 when control_bus(25 downto 23) = "010" else
+            d5 when control_bus(25 downto 23) = "011" else
+          d3_s when control_bus(25 downto 23) = "100" else
+            d5 when control_bus(25 downto 23) = "101" else
+            d4 when control_bus(25 downto 23) = "110" else
             x"0000";
 
     D3 <= d3_s;

@@ -13,7 +13,7 @@ entity detention_unit is
 end entity;
 
 architecture arch of detention_unit is
-signal bubble : out unsigned(15 downto 0);
+
 begin
   process(all)
   begin
@@ -87,7 +87,7 @@ begin
       reg_st1_write <= '0';
       selCtrl <= '1';
       bubble <= "0000000000000000000010000000010000";
-    elsif (selRegR = x"F") and (selRegW_st3 = 3 or selRegW_st3 = 6 or selRegW_st4 = 6 or selRegW_st4 = 3)
+    elsif (selRegR = x"F") and (selRegW_st3 = 3 or selRegW_st3 = 6 or selRegW_st4 = 6 or selRegW_st4 = 3) then
       PCWrite <= '0';
       reg_st1_write <= '0';
       selCtrl <= '1';
