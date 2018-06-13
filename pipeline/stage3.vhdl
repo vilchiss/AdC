@@ -42,17 +42,17 @@ c_ccr <= flags_ccr(3); -- TODO
 	-- Muxes
 acarreo <= c_adj when sel_c = '1' else c_ccr;
 
-DatoW <= X"0000" when sel_result = "00" else 
-			resultado_upa when sel_result = "01" else
-			OP2 when sel_result = "10" else
-			OP1 when sel_result = "11";
+with sel_result select Datow <=
+      X"0000" when "00",
+resultado_upa when "01",
+          OP2 when "10",
+          OP1 when "11";
 
-DirW <= X"0000" when sel_result = "00" else 
-			D3 when sel_result = "01" else
-			D3 when sel_result = "10" else
-			D3 when sel_result = "11";
-			
-	-- Registro
+with sel_result select DirW <=
+      X"0000" when "00",
+           D3 when others;
+          
+-- Registro
 registro_ccr: process(clk)
 	begin
 		if rising_edge(clk) then
@@ -61,7 +61,7 @@ registro_ccr: process(clk)
 end process;
 
 	-- Módulos
-generador_banderas: process(sel_flags, flags_upa)
+generador_banderas: process(all)
 	begin
 		case sel_flags is
 			when "0001" =>

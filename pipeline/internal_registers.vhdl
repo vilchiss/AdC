@@ -109,7 +109,7 @@ begin
         end case;
     end process; 
 
-    process (SelRegR)
+    process (all)
     begin
         case SelRegR is
             when x"0" =>

@@ -13,11 +13,11 @@ end entity sumador;
 
 architecture arch of sumador is
 
-    signal as   : unsigned (15 downto 0);
+    signal as   : unsigned (16 downto 0);
 
 begin
 
-    as <= a + ("" & cin) when sr = '1' else a - ("" & not(cin));
-    sum <= as + b when sr = '1' else as - b;
+    as <= (a & '1') + (b & cin)  when sr = '1' else (a & '0')  - (b & not(cin));
+    sum <= as(16 downto 1);
 
 end arch;
