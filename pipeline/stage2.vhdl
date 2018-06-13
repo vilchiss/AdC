@@ -5,9 +5,12 @@ library ieee;
 entity stage2 is
     port(
         clk, reset, MemW, SelDir1_ext: in std_logic;
+        SelCtrl : in std_logic;
         SelRegW: in unsigned(2 downto 0);
         instr: in unsigned(31 downto 0);
         PC, DatoW, DirW: in unsigned(15 downto 0);
+        Burbuja : in unsigned(33 downto 0);
+        SelRegR : out unsigned(3 downto 0);
         D3, OP1, OP2: out unsigned(15 downto 0);
         ControlBus: out unsigned(33 downto 0)
     );
@@ -19,6 +22,7 @@ architecture arch of stage2 is
     signal d1, d2r, d2, d3_s, d4, d5, reg_int, ext_signo: unsigned(15 downto 0);
     signal ind_inc: unsigned(15 downto 0);
     signal control_bus: unsigned(33 downto 0);
+    signal sel_reg_r_s : unsigne
 begin
 
     ------ Entidades ------
@@ -60,7 +64,10 @@ begin
         SelRegW     => control_bus(3 downto 1),
         MemW        => control_bus(0)
     );
-    ControlBus <= control_bus;
+
+    -- Mux que elige entre Burbuja i Señales de control
+    ControlBus <= control_bus when SelCtrl = '0' else Burbuja;
+    SelRegR <= control_bus(33 downto 30);
 
     -- Registros Internos --
     regf: entity work.internal_registers port map(
