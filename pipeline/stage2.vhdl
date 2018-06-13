@@ -5,7 +5,7 @@ library ieee;
 entity stage2 is
     port(
         clk, reset, MemW, SelDir1_ext: in std_logic;
-        SelRegW: in unsigned(3 downto 0);
+        SelRegW: in unsigned(2 downto 0);
         instr: in unsigned(31 downto 0);
         PC, DatoW, DirW: in unsigned(15 downto 0);
         D3, OP1, OP2: out unsigned(15 downto 0);

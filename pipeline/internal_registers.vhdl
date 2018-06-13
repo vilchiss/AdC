@@ -8,7 +8,7 @@ entity internal_registers is
         DatoW         : in  unsigned(15 downto 0);
         D1, D2        : out unsigned(15 downto 0);
         SelRegR       : in  unsigned(3 downto 0);
-        SelRegW       : in  unsigned(3 downto 0)
+        SelRegW       : in  unsigned(2 downto 0)
     );
 end internal_registers;
 
@@ -50,7 +50,7 @@ begin
     process (SelRegW)
     begin
         case SelRegW is
-            when x"1" =>
+            when "001" =>
                 enaa    <= '1';
                 enab    <= '0';
                 enax    <= '0';
@@ -58,7 +58,7 @@ begin
                 enasp   <= '0';
                 ena_aux <= '0';
  
-            when x"2" => 
+            when "010" => 
                 enaa    <= '0';
                 enab    <= '0';
                 enax    <= '1';
@@ -66,7 +66,7 @@ begin
                 enasp   <= '0';
                 ena_aux <= '0';
 
-            when x"3" => 
+            when "011" => 
                 enaa    <= '0';
                 enab    <= '0';
                 enax    <= '0';
@@ -74,7 +74,7 @@ begin
                 enasp   <= '0';
                 ena_aux <= '0';
 
-            when x"4" => 
+            when "100" => 
                 enaa    <= '0';
                 enab    <= '1';
                 enax    <= '0';
@@ -82,7 +82,7 @@ begin
                 enasp   <= '0';
                 ena_aux <= '0';
 
-            when x"5" => 
+            when "101" => 
                 enaa    <= '0';
                 enab    <= '0';
                 enax    <= '0';
@@ -90,7 +90,7 @@ begin
                 enasp   <= '0';
                 ena_aux <= '1';
 
-            when x"6" => 
+            when "110" => 
                 enaa    <= '0';
                 enab    <= '0';
                 enax    <= '0';

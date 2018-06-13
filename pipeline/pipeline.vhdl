@@ -26,7 +26,7 @@ architecture arch of pipeline is
   signal id_instr_s : unsigned(31 downto 0);
   --From stage 2
   signal if_id_MemW, if_id_SelDir1_ext : std_logic;
-  signal if_id_SelRegW : unsigned(3 downto 0);
+  signal if_id_SelRegW : unsigned(2 downto 0);
   signal if_id_DatoW, if_id_DirW : unsigned(15 downto 0);
   signal if_id_D3, if_id_OP1, if_id_OP2 : unsigned(15 downto 0);
   signal if_id_ControlBus : unsigned(33 downto 0);
@@ -113,7 +113,7 @@ begin
   EX_WB : process(clock, reset)
   begin
     if reset = '1' then
-      branch_s <= (others => '0');
+      branch_s <= '0';
       dato_w_s <= (others => '0');
       if_id_DatoW <= (others => '0');
       if_id_DirW <= (others => '0');

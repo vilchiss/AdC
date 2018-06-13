@@ -6,9 +6,9 @@ entity stage3 is
  port(
 	clk, reset		:	in std_logic;
 	ControlBusIn	:	in unsigned(33 downto 0);
-	OP1, OP2, D3 	:	in signed(15 downto 0);
+	OP1, OP2, D3 	:	in unsigned(15 downto 0);
 	Branch 			:	out std_logic;
-	DirW, DatoW 	:	out signed(15 downto 0);
+	DirW, DatoW 	:	out unsigned(15 downto 0);
 	Banderas			:	out unsigned(5 downto 0);
 	ControlBusOut	:	out unsigned(33 downto 0)
  );
@@ -25,7 +25,7 @@ architecture arch of stage3 is
 	-- Señales internas
 	signal acarreo	:	std_logic;
 	signal flags_upa, flags_generador, flags_ccr	:	unsigned(5 downto 0);
-	signal resultado_upa	:	signed(15 downto 0);
+	signal resultado_upa	:	unsigned(15 downto 0);
 	
 	begin
 	
