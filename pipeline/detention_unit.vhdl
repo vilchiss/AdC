@@ -8,7 +8,7 @@ entity detention_unit is
   reg_st1_write : out std_logic;
   selRegR : in unsigned(3 downto 0);
   selRegW_st3, selRegW_st4 : in unsigned(2 downto 0);
-  bubble : out unsigned(30 downto 0)
+  bubble : out unsigned(33 downto 0)
   );
 end entity;
 

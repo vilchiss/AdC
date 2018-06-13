@@ -8,7 +8,7 @@ entity stage3 is
 	ControlBusIn	:	in unsigned(33 downto 0);
 	OP1, OP2, D3 	:	in signed(15 downto 0);
 	Branch 			:	out std_logic;
-	DirW, DatoW 	:	out unsigned(15 downto 0);
+	DirW, DatoW 	:	out signed(15 downto 0);
 	Banderas			:	out unsigned(5 downto 0);
 	ControlBusOut	:	out unsigned(33 downto 0)
  );
@@ -29,13 +29,13 @@ architecture arch of stage3 is
 	
 	begin
 	
-sel_op <= control_bus(19 downto 16);
-sel_flags <= control_bus(11 downto 8);	
-sel_result <= control_bus(15 downto 14);
-sel_branch <= control_bus(7 downto 5);
-vf <= control_bus(4);
-sel_c <= control_bus(13);
-c_adj <= control_bus(12);
+sel_op <= bus_control(19 downto 16);
+sel_flags <= bus_control(11 downto 8);	
+sel_result <= bus_control(15 downto 14);
+sel_branch <= bus_control(7 downto 5);
+vf <= bus_control(4);
+sel_c <= bus_control(13);
+c_adj <= bus_control(12);
 
 c_ccr <= flags_ccr(3); -- TODO
 	
@@ -48,9 +48,9 @@ DatoW <= X"0000" when sel_result = "00" else
 			OP1 when sel_result = "11";
 
 DirW <= X"0000" when sel_result = "00" else 
-			D3 when "01" else
-			D3 when "10" else
-			D3 when "11";
+			D3 when sel_result = "01" else
+			D3 when sel_result = "10" else
+			D3 when sel_result = "11";
 			
 	-- Registro
 registro_ccr: process(clk)
