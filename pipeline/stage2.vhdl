@@ -9,7 +9,7 @@ entity stage2 is
         instr: in unsigned(31 downto 0);
         PC, DatoW, DirW: in unsigned(15 downto 0);
         D3, OP1, OP2: out unsigned(15 downto 0);
-        ControlBus: out unsigned(31 downto 0)
+        ControlBus: out unsigned(33 downto 0)
     );
 end stage2;
 
@@ -22,6 +22,23 @@ architecture arch of stage2 is
 begin
 
     ------ Entidades ------
+    -- Memoria de datos
+    prog_mem: entity work.ram
+    generic map (
+        word_size => 16,
+        addr_size => 16,
+        memory_size => 256,
+        memory_file => "ram_file.mif"  -- TODO: create instruction file
+    )
+    port map(
+        clock    => clk,
+        we       => MemW, -- no escribimos en esta memoria
+        addr     => d3_s,
+        data_in  => DatoW, -- no escribimos en esta memoria
+        data_out => d4
+    );
+
+
     -- Unidad de Control --
     controlu: entity work.control_unit port map (
         instr       => instr(31 downto 16),

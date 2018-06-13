@@ -32,8 +32,14 @@ architecture arch of stage1 is
     end process;
 
     -- Memoria de instrucciones
-    -- TODO: Añadir memoria e instanciar
-    prog_mem: entity work.ram port map(
+    prog_mem: entity work.ram
+    generic map (
+        word_size => 32,
+        addr_size => 16,
+        memory_size => 256,
+        memory_file => "ram_file.mif"  -- TODO: create data file
+    )
+    port map(
         clock    => clk,
         we       => '0', -- no escribimos en esta memoria
         addr     => out_pc,

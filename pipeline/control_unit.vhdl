@@ -7,8 +7,8 @@ entity control_unit is
         instr:   in  unsigned(15 downto 0);
         SelS1, SR, Cin, SelS2, SelDato,
         SelC, Cadj, VF, MemW:  out std_logic;
-        SelRegR, SelOp, SelFlags, SelBranch:    out unsigned(3 downto 0);
-        SelScrs, SelRegW:           out unsigned(2 downto 0);
+        SelRegR, SelOp, SelFlags:    out unsigned(3 downto 0);
+        SelScrs, SelRegW, SelBranch:           out unsigned(2 downto 0);
         SelDir, SelResult: out unsigned(1 downto 0)
     );
 end control_unit;
@@ -32,7 +32,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"2";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"1";
                 MemW        <=   '0';
@@ -52,7 +52,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"0";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"3";
                 MemW        <=   '0';
@@ -72,7 +72,7 @@ begin
                 SelC        <=   '0';
                 Cadj        <=   '0';
                 SelFlags    <=  x"2";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"4";
                 MemW        <=   '0';
@@ -92,7 +92,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"1";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"1";
                 MemW        <=   '0';
@@ -112,7 +112,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"1";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"4";
                 MemW        <=   '0';
@@ -132,7 +132,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"1";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"4";
                 MemW        <=   '0';
@@ -152,7 +152,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"3";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"0";
                 MemW        <=   '1';
@@ -172,7 +172,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"3";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"0";
                 MemW        <=   '1';
@@ -192,7 +192,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"3";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"4";
                 MemW        <=   '0';
@@ -212,7 +212,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"0";
-                SelBranch   <=   "0001";
+                SelBranch   <= "001";
                 VF          <=   '0';
                 SelRegW     <=  o"0";
                 MemW        <=   '0';
@@ -232,7 +232,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"1";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"0";
                 MemW        <=   '0';
@@ -252,7 +252,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"0";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '0';
                 SelRegW     <=  o"0";
                 MemW        <=   '0';
@@ -272,7 +272,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '1';
                 SelFlags    <=  x"3";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"0";
                 MemW        <=   '0';
@@ -292,7 +292,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"3";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"0";
                 MemW        <=   '1';
@@ -312,7 +312,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '1';
                 SelFlags    <=  x"3";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"0";
                 MemW        <=   '0';
@@ -332,7 +332,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"B";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"0";
                 MemW        <=   '1';
@@ -352,7 +352,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"B";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"4";
                 MemW        <=   '0';
@@ -372,7 +372,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '1';
                 SelFlags    <=  x"3";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"0";
                 MemW        <=   '0';
@@ -392,7 +392,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"C";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"0";
                 MemW        <=   '1';
@@ -412,7 +412,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"0";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"6";
                 MemW        <=   '0';
@@ -432,7 +432,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '1';
                 SelFlags    <=  x"C";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"4";
                 MemW        <=   '0';
@@ -452,7 +452,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"1";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"1";
                 MemW        <=   '0';
@@ -472,7 +472,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"1";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"3";
                 MemW        <=   '0';
@@ -492,7 +492,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '1';
                 SelFlags    <=  x"3";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"0";
                 MemW        <=   '1';
@@ -512,7 +512,7 @@ begin
                 SelC        <=   '0';
                 Cadj        <=   '0';
                 SelFlags    <=  x"0";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"0";
                 MemW        <=   '0';
@@ -532,7 +532,7 @@ begin
                 SelC        <=   '0';
                 Cadj        <=   '0';
                 SelFlags    <=  x"3";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"0";
                 MemW        <=   '1';
@@ -552,7 +552,7 @@ begin
                 SelC        <=   '0';
                 Cadj        <=   '0';
                 SelFlags    <=  x"3";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"4";
                 MemW        <=   '0';
@@ -572,7 +572,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"1";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"0";
                 MemW        <=   '1';
@@ -592,7 +592,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"1";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"0";
                 MemW        <=   '1';
@@ -612,7 +612,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '1';
                 SelFlags    <=  x"3";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"0";
                 MemW        <=   '0';
@@ -632,7 +632,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '1';
                 SelFlags    <=  x"0";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"2";
                 MemW        <=   '0';
@@ -652,7 +652,7 @@ begin
                 SelC        <=   '1';
                 Cadj        <=   '0';
                 SelFlags    <=  x"0";
-                SelBranch   <=   "0000";
+                SelBranch   <= "000";
                 VF          <=   '1';
                 SelRegW     <=  o"6";
                 MemW        <=   '0';
@@ -672,7 +672,7 @@ begin
                 SelC        <=            '0';
                 Cadj        <=            '0';
                 SelFlags    <= (others => '0');
-                SelBranch   <=            "0000";
+                SelBranch   <=          "000";
                 VF          <=            '0';
                 SelRegW     <= (others => '0');
                 MemW        <=            '0';
