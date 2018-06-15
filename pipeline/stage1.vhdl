@@ -4,7 +4,7 @@ library ieee;
 
 entity stage1 is
     port(
-        clk, Branch, reset: in std_logic;
+        clk, Branch, reset, PCWrite: in std_logic;
         DatoW: in unsigned(15 downto 0);
         PC: out unsigned(15 downto 0);
         instr: out unsigned(31 downto 0)
@@ -13,7 +13,7 @@ end stage1;
 
 architecture arch of stage1 is
     signal out_mux : unsigned(15 downto 0);
-    signal out_pc : unsigned(15 downto 0);
+    signal out_pc : unsigned(15 downto 0) := (others => '0');
     signal out_incr : unsigned(15 downto 0);
 
  begin
@@ -25,7 +25,7 @@ architecture arch of stage1 is
         if reset = '1' then
             out_pc <= (others => '0');
         else
-            if rising_edge(clk) then
+            if rising_edge(clk) and PCWrite = '1' then
                 out_pc <= out_mux;
             end if;
         end if;

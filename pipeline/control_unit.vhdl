@@ -457,6 +457,26 @@ begin
                 SelRegW     <=  o"1";
                 MemW        <=   '0';
                 SelDir(1)   <=   '0';
+					 
+            when x"00C6" =>
+                SelRegR     <=  x"0";
+                SelS1       <=   '0';
+                SR          <=   '1';
+                Cin         <=   '0';
+                SelS2       <=   '0';
+                SelScrs     <=  o"3";
+                SelDato     <=   '1';
+                SelDir(0)   <=   '0';
+                SelOp       <=  x"4";
+                SelResult   <=   "01";
+                SelC        <=   '1';
+                Cadj        <=   '0';
+                SelFlags    <=  x"1";
+                SelBranch   <= "000";
+                VF          <=   '1';
+                SelRegW     <=  o"4";
+                MemW        <=   '0';
+                SelDir(1)   <=   '0';
 
             when x"18EE" =>
                 SelRegR     <=  x"A";

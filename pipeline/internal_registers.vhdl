@@ -8,6 +8,7 @@ entity internal_registers is
         DatoW         : in  unsigned(15 downto 0);
         D1, D2        : out unsigned(15 downto 0);
         SelRegR       : in  unsigned(3 downto 0);
+		  ACCAS         : out unsigned(7 downto 0);
         SelRegW       : in  unsigned(2 downto 0)
     );
 end internal_registers;
@@ -16,6 +17,8 @@ architecture arch of internal_registers is
     signal enaa, enab, enax, enay, enasp, ena_aux : std_logic;
     signal acca, accb, ix, iy, sp, aux : unsigned (15 downto 0);  
 begin
+
+    ACCAS <= acca(7 downto 0);
     reg: process (clk, reset)
     begin
         if reset = '1' then

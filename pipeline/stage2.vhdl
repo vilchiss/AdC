@@ -7,6 +7,7 @@ entity stage2 is
         clk, reset, MemW, SelDir1_ext: in std_logic;
         SelCtrl : in std_logic;
         SelRegW: in unsigned(2 downto 0);
+        ACCA: out unsigned(7 downto 0);
         instr: in unsigned(31 downto 0);
         PC, DatoW, DirW: in unsigned(15 downto 0);
         Burbuja : in unsigned(33 downto 0);
@@ -18,13 +19,14 @@ end stage2;
 
 architecture arch of stage2 is
     signal sel_dir: unsigned(1 downto 0);
+    signal accas: unsigned(7 downto 0);
     signal sel_s1_mux: unsigned(15 downto 0);
     signal d1, d2r, d2, d3_s, d4, d5, reg_int, ext_signo: unsigned(15 downto 0);
     signal ind_inc: unsigned(15 downto 0);
     signal control_bus: unsigned(33 downto 0);
-    signal sel_reg_r_s : unsigne
+    
 begin
-
+	ACCA <= accas;
     ------ Entidades ------
     -- Memoria de datos
     prog_mem: entity work.ram
@@ -32,7 +34,7 @@ begin
         word_size => 16,
         addr_size => 16,
         memory_size => 256,
-        memory_file => "ram_file.mif"  -- TODO: create instruction file
+        memory_file => "data_ram_file.mif"  -- TODO: create instruction file
     )
     port map(
         clock    => clk,
@@ -65,7 +67,7 @@ begin
         MemW        => control_bus(0)
     );
 
-    -- Mux que elige entre Burbuja i Señales de control
+    -- Mux que elige entre Burbuja i Señales de
     ControlBus <= control_bus when SelCtrl = '0' else Burbuja;
     SelRegR <= control_bus(33 downto 30);
 
@@ -77,6 +79,7 @@ begin
         D2      => d2r,
         DatoW   => DatoW,
         SelRegR => control_bus(33 downto 30),
+		  ACCAS   => accas,
         SelRegW => SelRegW
     );
 
